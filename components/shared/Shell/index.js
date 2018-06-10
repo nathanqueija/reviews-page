@@ -4,6 +4,7 @@ import Head from 'next/head'
 import Router from 'next/router'
 import NProgress from 'nprogress'
 import Container, {Main} from './styles'
+import Header from 'components/shared/Shell/Header'
 
 Router.onRouteChangeStart = () => {
   NProgress.start()
@@ -19,7 +20,7 @@ class Layout extends Component {
     super(props)
   }
   render() {
-    const {errorCode, pageProps, url, router, children} = this.props
+    const {children, mainNav} = this.props
 
     return (
       <Fragment>
@@ -30,6 +31,7 @@ class Layout extends Component {
             href="/static/styles/nprogress.css"
           />
         </Head>
+        <Header mainNav={mainNav} />
         <Container>
           <Main>{children}</Main>
         </Container>
