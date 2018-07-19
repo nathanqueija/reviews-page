@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
+import {Component} from 'react'
 import Link from 'next/link'
-import Head from 'next/head'
+import Container, {Menu, Navigation, MenuItem, Logo} from './styles'
 
 export default class Header extends Component {
   constructor() {
@@ -11,13 +11,15 @@ export default class Header extends Component {
     return parts.length > 2 ? parts[parts.length - 2] : ''
   }
 
-  getMenu = () => {
+  getNavigation = () => {
     const {mainNav} = this.props
-    return mainNav.items.map((item, index) => {
+    return mainNav.items.map((item) => {
       if (item.object === 'custom') {
         return (
           <Link href={item.url} key={item.ID}>
-            <a>{item.title}</a>
+            <MenuItem color={item.acf.Cor}>
+              <span>{item.title}</span>
+            </MenuItem>
           </Link>
         )
       }
@@ -29,26 +31,30 @@ export default class Header extends Component {
           href={`/${actualPage}?slug=${slug}&apiRoute=${item.object}`}
           key={item.ID}
         >
-          <a>{item.title}</a>
+          <MenuItem color={item.acf.Cor}>
+            <span>{item.title}</span>
+          </MenuItem>
         </Link>
       )
     })
   }
 
   render() {
+    const {sliderHeight} = this.props
     return (
-      <div>
-        <Head>
-          <meta charSet="utf-8" />
-          <title>SERVO</title>
-        </Head>
-        <header>
+      <Container>
+        <Menu>
           <Link href="/">
-            <h1>Wordpress Site</h1>
+            <Logo>
+              <img src="/static/img/logo.jpg" alt="Seminário Servo de Cristo" />
+            </Logo>
           </Link>
-          {this.getMenu()}
-        </header>
-      </div>
+
+          <Navigation>
+            <ul>{this.getNavigation()}</ul>
+          </Navigation>
+        </Menu>
+      </Container>
     )
   }
 }

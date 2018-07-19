@@ -1,50 +1,34 @@
 import App, {Container} from 'next/app'
 import Layout from 'components/shared/Shell'
-import withApolloClient from 'lib/apollo/withApolloClient'
-import {ApolloProvider} from 'react-apollo'
+import {Provider} from 'react-redux'
+import withRedux from 'next-redux-wrapper'
+import {initStore} from 'lib/redux/store'
 
-import {getMenu} from 'services/menu-api'
-
-class MyApp extends App {
-  static async getInitialProps({Component, router, ctx}) {
-    let pageProps = {}
-
-    const menu = await getMenu()
-
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx)
+export default withRedux(initStore)(
+  class MyApp extends App {
+    static async getInitialProps({Component, ctx}) {
+      return {
+        pageProps: Component.getInitialProps
+          ? await Component.getInitialProps(ctx)
+          : {}
+      }
     }
 
-    return {
-      pageProps,
-      url: {
-        query: router.query,
-        pathname: router.pathname,
-        asPath: router.asPath
-      },
-      mainNav: menu.data
+    constructor(props) {
+      super(props)
+    }
+
+    render() {
+      const {Component, pageProps, store} = this.props
+      return (
+        <Container>
+          <Provider store={store}>
+            <Layout pageProps={pageProps}>
+              <Component {...pageProps} />
+            </Layout>
+          </Provider>
+        </Container>
+      )
     }
   }
-
-  render() {
-    const {
-      Component,
-      pageProps,
-      url,
-      router,
-      apolloClient,
-      mainNav
-    } = this.props
-    return (
-      <Container>
-        <ApolloProvider client={apolloClient}>
-          <Layout pageProps={pageProps} router={router} mainNav={mainNav}>
-            <Component {...pageProps} url={url} router={router} />
-          </Layout>
-        </ApolloProvider>
-      </Container>
-    )
-  }
-}
-
-export default withApolloClient(MyApp)
+)

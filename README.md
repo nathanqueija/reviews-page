@@ -1,4 +1,4 @@
-# Theological Seminary Web Client
+# Reviews page
 
 ## Install
 

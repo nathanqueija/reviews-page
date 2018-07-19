@@ -9,7 +9,7 @@ export default class AppDocument extends Document {
       sheet.collectStyles(<App {...props} />)
     )
     const styleTags = [sheet.getStyleElement()]
-    return {...page, styleTags, prod: process.env.NODE_ENV === 'production'}
+    return {...page, styleTags}
   }
 
   render() {
@@ -21,7 +21,7 @@ export default class AppDocument extends Document {
           {styleTags}
           {globalStyles}
           <link
-            href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+            href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800"
             rel="stylesheet"
           />
 

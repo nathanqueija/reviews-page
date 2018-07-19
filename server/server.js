@@ -3,7 +3,6 @@ const next = require('next')
 const {parse} = require('url')
 const {join} = require('path')
 const path = require('path')
-const buildSitemap = require('../lib/sitemap')
 const dev = process.env.NODE_ENV !== 'production'
 const port = process.env.PORT || 3000
 const app = next({dir: '.', dev})
@@ -48,30 +47,8 @@ const startServer = () => {
         const parsedUrl = parse(req.url, true)
         const rootStaticFiles = ['/robots.txt', '/sitemap.xml']
         if (rootStaticFiles.indexOf(parsedUrl.pathname) > -1) {
-          if (parsedUrl.pathname.indexOf('sitemap') > -1) {
-            buildSitemap()
-              .then((response) => {
-                console.log(response)
-
-                const pathToSitemap = path.join(
-                  process.cwd(),
-                  'static',
-                  'sitemap.xml'
-                )
-                app.serveStatic(req, res, pathToSitemap)
-              })
-              .catch((e) => {
-                console.log(
-                  `The following error has ocurred while trying to build sitemap: ${
-                    e.message
-                  }`
-                )
-                app.render(req, res, '/', req.query)
-              })
-          } else {
-            const path = join(__dirname, 'static', parsedUrl.pathname)
-            app.serveStatic(req, res, path)
-          }
+          const path = join(__dirname, 'static', parsedUrl.pathname)
+          app.serveStatic(req, res, path)
         } else {
           return handle(req, res)
         }
