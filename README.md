@@ -12,7 +12,7 @@ Don't forget to provide api url as an environment variable called `REACT_APP_API
 
 ## Tests
 
-`yarn test` to run some simple automated unit Jest.
+`yarn test` to run some simple automated unit tests with Jest and Enzyme.
 
 ## Contribute
 
