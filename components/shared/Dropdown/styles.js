@@ -16,6 +16,7 @@ export default styled.div`
   position: relative;
   cursor: pointer;
   user-select: none;
+  min-width: 120px;
 
   svg {
     width: 12px !important;
@@ -35,6 +36,9 @@ export const ValueSelected = styled.div`
   color: ${blue.light};
   margin-right: 5px;
   font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 export const Values = styled.div`
@@ -44,8 +48,8 @@ export const Values = styled.div`
   top: calc(100% + 1px);
   border: 1px solid ${blue.light};
   border-top: none;
-  width: 98%;
-  margin-left: 1%;
+  width: 90%;
+  margin-left: 5%;
   z-index: 3;
 `
 

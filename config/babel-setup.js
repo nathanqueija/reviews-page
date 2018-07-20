@@ -21,7 +21,9 @@ const plugins = [
         permissions: './permissions',
         services: './services',
         utils: './utils',
-        styles: './styles'
+        styles: './styles',
+        actions: './actions',
+        reducers: './reducers'
       }
     }
   ],

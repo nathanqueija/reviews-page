@@ -6,40 +6,38 @@ import Container, {
   Review
 } from './styles'
 import Rating from 'components/shared/Rating'
+import moment from 'moment'
 
-export default ({date, stars, author, text}) => (
+export default ({
+  reviewCreated,
+  stars,
+  content,
+  title,
+  childAsin,
+  productTitle
+}) => (
   <Container>
     <ReviewHead>
       <ProfilePicture />
       <ReviewInfoContainer>
         <ReviewInfo>
           <span>Date</span>
-          <span>12.12.2017</span>
+          <span>{moment(reviewCreated).format('MM.DD.YYYY')}</span>
         </ReviewInfo>
         <ReviewInfo>
           <span>Stars</span>
-          <Rating stars={3} />
+          <Rating stars={stars} />
         </ReviewInfo>
         <ReviewInfo>
-          <span>BO16hwer</span>
-          <span>Anker SoundCore lalala Teste 123</span>
+          <span>{childAsin}</span>
+          <span>{productTitle}</span>
         </ReviewInfo>
       </ReviewInfoContainer>
       <ReviewInfo />
     </ReviewHead>
     <Review>
-      <h6>Review Title</h6>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-        ultricies elit a lacus semper lacinia. Sed et orci nulla. Nunc laoreet
-        ornare justo, vitae pulvinar tellus. Phasellus eleifend felis iaculis
-        turpis ultricies, quis ornare est elementum. Cras lacinia vel dolor id
-        pharetra. Duis molestie leo vitae leo mollis viverra. Quisque elementum
-        tortor ut turpis aliquam porttitor. Nulla ex felis, ultricies at purus
-        id, mollis pulvinar nibh. Duis purus neque, eleifend ut sem ut, eleifend
-        sagittis tellus. Mauris at posuere lacus. Duis sed tellus velit. Duis
-        maximus vitae felis id imperdiet.
-      </p>
+      <h6>{title}</h6>
+      <p>{content}</p>
     </Review>
   </Container>
 )

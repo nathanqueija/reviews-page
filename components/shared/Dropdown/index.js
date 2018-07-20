@@ -31,7 +31,11 @@ export default class Dropdown extends Component {
       return {opened: !opened}
     })
 
-  selectValue = (selected) => this.setState({selected})
+  selectValue = (selected) => {
+    const {onChange} = this.props
+    this.setState({selected})
+    onChange && onChange(selected)
+  }
 
   render() {
     const {opened, selected} = this.state

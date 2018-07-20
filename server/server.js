@@ -1,12 +1,10 @@
 const express = require('express')
 const next = require('next')
-const {parse} = require('url')
-const {join} = require('path')
-const path = require('path')
 const dev = process.env.NODE_ENV !== 'production'
 const port = process.env.PORT || 3000
 const app = next({dir: '.', dev})
 const handle = app.getRequestHandler()
+const fetchReviews = require('../services/reviews-api')
 
 const startServer = () => {
   app
@@ -19,39 +17,18 @@ const startServer = () => {
         next()
       })
 
-      server.get('/post/:slug', (req, res) => {
-        const actualPage = '/post'
-        const queryParams = {slug: req.params.slug, apiRoute: 'post'}
-        app.render(req, res, actualPage, queryParams)
-      })
-
-      server.get('/page/:slug', (req, res) => {
-        const actualPage = '/post'
-        const queryParams = {slug: req.params.slug, apiRoute: 'page'}
-        app.render(req, res, actualPage, queryParams)
-      })
-
-      server.get('/category/:slug', (req, res) => {
-        const actualPage = '/category'
-        const queryParams = {slug: req.params.slug}
-        app.render(req, res, actualPage, queryParams)
-      })
-
-      server.get('/_preview/:id/:wpnonce', (req, res) => {
-        const actualPage = '/preview'
-        const queryParams = {id: req.params.id, wpnonce: req.params.wpnonce}
-        app.render(req, res, actualPage, queryParams)
+      server.get('/reviews/:page', async (req, res) => {
+        const {page} = req.params
+        try {
+          const response = await fetchReviews(page)
+          res.status(200).send(response.data)
+        } catch (e) {
+          res.status(500).send({error: e})
+        }
       })
 
       server.get('*', (req, res) => {
-        const parsedUrl = parse(req.url, true)
-        const rootStaticFiles = ['/robots.txt', '/sitemap.xml']
-        if (rootStaticFiles.indexOf(parsedUrl.pathname) > -1) {
-          const path = join(__dirname, 'static', parsedUrl.pathname)
-          app.serveStatic(req, res, path)
-        } else {
-          return handle(req, res)
-        }
+        return handle(req, res)
       })
 
       server.listen(port, (err) => {

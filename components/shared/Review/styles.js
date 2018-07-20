@@ -33,17 +33,21 @@ export const ReviewInfo = styled.div`
 `
 export const ReviewHead = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `
 export const ReviewInfoContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `
 
 export const ProfilePicture = styled.div`
   width: 40px;
   height: 40px;
+  min-width: 40px;
   background: ${gray.light};
   border-radius: 4px;
   margin-right: 20px;
+  margin-bottom: 5px;
 `
 
 export const Review = styled.div`
