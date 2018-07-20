@@ -5,8 +5,13 @@ const port = process.env.PORT || 3000
 const app = next({dir: '.', dev})
 const handle = app.getRequestHandler()
 const fetchReviews = require('../services/reviews-api')
+const apiUrl = process.env.REACT_APP_API_URL
 
 const startServer = () => {
+  if (!apiUrl)
+    throw new Error(
+      'Please, provide an env var called REACT_APP_API_URL to bootstrap the app '
+    )
   app
     .prepare()
     .then(() => {
