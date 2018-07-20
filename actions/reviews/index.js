@@ -6,6 +6,7 @@ export function fetch(page) {
     dispatch({type: FETCH_REVIEWS})
     const response = await get(`/reviews/${page}`)
     dispatch({type: SET_REVIEWS, payload: {data: response.data}})
+    return response.data
   }
 }
 

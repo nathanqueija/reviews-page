@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import _ from 'lodash'
+import moment from 'moment'
 import Head from 'next/head'
 import {connect} from 'react-redux'
 import SearchField from 'components/shared/SearchField'
@@ -17,8 +18,6 @@ import {fetch as fetchReviews, refetch as refetchReviews} from 'actions/reviews'
 import InfiniteScroll from 'components/shared/InfiniteScroll'
 import {search, ratings, order} from 'lib/filters'
 
-import moment from 'moment'
-
 class Index extends Component {
   state = {
     filters: {
@@ -29,9 +28,10 @@ class Index extends Component {
       time: {order: order, on: false}
     }
   }
-  componentWillMount() {
-    const {fetchReviews} = this.props
-    fetchReviews(1)
+
+  constructor(props) {
+    super(props)
+    props.fetchReviews(1)
   }
 
   fetchMore = async () => {

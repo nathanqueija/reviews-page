@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   page: 1,
   reviews: [],
   hasMore: true,
-  loading: false
+  loading: true
 }
 
 export default function(state = INITIAL_STATE, action) {
