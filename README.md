@@ -8,7 +8,7 @@
 
 Don't forget to provide api url as an environment variable called `REACT_APP_API_URL` when starting the application. Otherwise it will not bootstrap.
 
-` REACT_APP_API_URL={prove api url here yarn start`.
+` REACT_APP_API_URL={prove api url here} yarn start`.
 
 ## Tests
 
